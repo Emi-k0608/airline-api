@@ -24,5 +24,11 @@ public class FlightService {
 	public List<Flight> getAllFlights(){
 		return flights;
 	}
+	
+	// 受け取った Flight をListに追加する
+	public Flight addFlight(Flight flight) {
+		flights.add(flight);
+		return flight;
+	}
 
 }
