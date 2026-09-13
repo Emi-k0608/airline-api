@@ -2,9 +2,14 @@ package com.emikaido.airlineapi.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import com.emikaido.airlineapi.model.Flight;
 import com.emikaido.airlineapi.model.FlightStatus;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class FlightService {
@@ -29,6 +34,14 @@ public class FlightService {
 	public Flight addFlight(Flight flight) {
 		flights.add(flight);
 		return flight;
+	}
+	
+	// 1便検索を行う
+	public Flight findFlightByNumber(String flightNum) {
+		Flight foundFlight
+			= flights.stream().filter(flight -> flight.getFlightNum().equals(flightNum)).findFirst()
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Flight not found: " + flightNum));
+		return foundFlight;
 	}
 
 }
