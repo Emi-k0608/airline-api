@@ -24,7 +24,7 @@ public class FlightController {
 	}
 	
 	@GetMapping("/flights")
-    public  List<Flight> flights() {
+    public List<Flight> flights() {
 		return flightService.getAllFlights();
 	
 	}
@@ -38,6 +38,6 @@ public class FlightController {
 	@GetMapping("/flights/{flightNum}")
 	public Flight getFlight(@PathVariable String flightNum) {
 		return flightService.findFlightByNumber(flightNum);
-	}	
+	}
 
 }
