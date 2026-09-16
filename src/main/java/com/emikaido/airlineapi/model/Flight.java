@@ -1,14 +1,31 @@
 package com.emikaido.airlineapi.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "flights", schema = "aviation")
 public class Flight {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(name = "flight_num")
 	private String flightNum;
 	private String origin;
 	private String destination;
+	
+	@Enumerated(EnumType.STRING)
 	private FlightStatus status;
 
 	// 引数なしconstructor
 	public Flight() {
-		
 	}
 	
 	// constructor
