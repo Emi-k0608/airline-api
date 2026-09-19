@@ -37,5 +37,27 @@ public class FlightService {
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Flight not found: " + flightNum));
 		return foundFlight;
 	}
+	
+	// 既存のFlight情報を更新する
+	public Flight updateFlight(String flightNum, Flight flight) {
+		// １便検索
+		Flight existingFlight = findFlightByNumber(flightNum);
+		
+		// Flight情報set
+		existingFlight.setOrigin(flight.getOrigin());
+		existingFlight.setDestination(flight.getDestination());
+		existingFlight.setStatus(flight.getStatus());
+		
+		// 更新
+		return flightRepository.save(existingFlight);
+	}
+	
+	// 既存のFlight情報を削除する
+	public void deleteFlight(String flightNum) {
+		// １便検索
+		Flight existingFlight = findFlightByNumber(flightNum);
+		// 削除
+		flightRepository.delete(existingFlight);
+	}
 
 }
