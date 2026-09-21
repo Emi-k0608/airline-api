@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "flights", schema = "aviation")
@@ -17,11 +19,15 @@ public class Flight {
 	private Long id;
 	
 	@Column(name = "flight_num")
+	@NotBlank
 	private String flightNum;
+	@NotBlank
 	private String origin;
+	@NotBlank
 	private String destination;
 	
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private FlightStatus status;
 
 	// 引数なしconstructor

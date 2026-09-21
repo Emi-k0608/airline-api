@@ -16,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import com.emikaido.airlineapi.model.Flight;
 import com.emikaido.airlineapi.service.FlightService;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 public class FlightController {
@@ -33,7 +35,7 @@ public class FlightController {
 	
 	@PostMapping("/flights")
 	@ResponseStatus(HttpStatus.CREATED) // 201 Created を返す
-	public Flight addFlight(@RequestBody Flight flight) {
+	public Flight addFlight(@Valid @RequestBody Flight flight) {
 		return flightService.addFlight(flight);
 	}
 	
@@ -43,7 +45,7 @@ public class FlightController {
 	}
 	
 	@PutMapping("/flights/{flightNum}")
-	public Flight putFlight(@PathVariable String flightNum, @RequestBody Flight flight) {
+	public Flight putFlight(@PathVariable String flightNum, @Valid @RequestBody Flight flight) {
 		return flightService.updateFlight(flightNum, flight);
 	}
 	
