@@ -3,6 +3,8 @@ package com.emikaido.airlineapi.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+
+import com.emikaido.airlineapi.exception.FlightNotFoundException;
 import com.emikaido.airlineapi.model.Flight;
 import com.emikaido.airlineapi.repository.FlightRepository;
 
@@ -34,7 +36,8 @@ public class FlightService {
 	public Flight findFlightByNumber(String flightNum) {
 		Flight foundFlight
 			= flightRepository.findByFlightNum(flightNum)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Flight not found: " + flightNum));
+				.orElseThrow(() -> new FlightNotFoundException
+						("Flight not found: " + flightNum));
 		return foundFlight;
 	}
 	

@@ -50,6 +50,7 @@ public class FlightController {
 	}
 	
 	@DeleteMapping("/flights/{flightNum}")
+	@ResponseStatus(HttpStatus.NO_CONTENT) // 204 No Content を返す
 	public void deleteFlight(@PathVariable String flightNum) {
 		flightService.deleteFlight(flightNum);
 	}
