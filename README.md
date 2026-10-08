@@ -2,19 +2,22 @@
 
 ## Overview
 
-This project is a Spring Boot REST API that manages flight information.
-It allows users to create, get, update, and delete flight information.
-I built this project to learn and improve my skills in Java backend development, REST APIs, and PostgreSQL.
+Airline API is a Spring Boot REST API for managing flight information.
+
+It supports CRUD operations, request validation, error handling, and PostgreSQL persistence.
+
+I built this project to strengthen my skills in Java backend development, REST API design, and database integration.
 
 ## Features
 
 - Create flight information
-- Retrieve flight information
+- Retrieve all flights or a flight by flight number
 - Update existing flight information
 - Delete flight information
 - Validate incoming requests
 - Handle validation and not-found errors
 - Store flight data in PostgreSQL
+- Return appropriate HTTP status codes
 
 ## Tech Stack
 
@@ -41,22 +44,20 @@ I built this project to learn and improve my skills in Java backend development,
 ## Validation & Error Handling
 
 The API validates incoming requests and returns `400 Bad Request` when validation fails.
-It returns an error message for each invalid field.
 
-When a flight is not found, the API returns `404 Not Found`.
-The API uses a custom `FlightNotFoundException` to handle this case.
+When a flight is not found, the API returns `404 Not Found` using a custom `FlightNotFoundException`.
 
 ## Database
 
 PostgreSQL is used as the relational database for storing flight information.
-Spring Data JPA and Hibernate are used for data persistence and object-relational mapping (ORM).
-The `Flight` entity is stored in PostgreSQL and accessed through the repository layer.
+
+Spring Data JPA and Hibernate are used for data persistence and object-relational mapping (ORM). The `Flight` entity is stored in the `aviation.flights` table and accessed through the repository layer.
 
 ## How to Run
 
 ### Prerequisites
 
-- Java 21
+- Java 21 or later
 - PostgreSQL
 
 The Maven Wrapper is included in this repository, so Maven does not need to be installed separately.
@@ -66,20 +67,22 @@ The Maven Wrapper is included in this repository, so Maven does not need to be i
 1. Clone the repository.
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Emi-k0608/airline-api.git
 cd airline-api
 ```
 
 2. Create the PostgreSQL database.
 
 ```bash
-psql -U postgres -c "CREATE DATABASE airline_db;"
+createdb airline_db
 ```
+
+Alternatively, you can create it using `psql`.
 
 3. Run the database initialization script.
 
 ```bash
-psql -U postgres -d airline_db -f database/init.sql
+psql -d airline_db -f database/init.sql
 ```
 
 This creates the `aviation` schema and the `flights` table.
@@ -87,8 +90,14 @@ This creates the `aviation` schema and the `flights` table.
 4. Set the database credentials.
 
 ```bash
-export DB_USERNAME=postgres
-export DB_PASSWORD=your_password
+export DB_USERNAME=your_postgresql_username
+export DB_PASSWORD=your_postgresql_password
+```
+
+If your local PostgreSQL user does not require a password:
+
+```bash
+export DB_PASSWORD=''
 ```
 
 By default, the application connects to:
@@ -97,19 +106,25 @@ By default, the application connects to:
 jdbc:postgresql://localhost:5432/airline_db
 ```
 
-You can optionally override the database URL, for example when connecting to a remote database:
+You can optionally override the database URL:
 
 ```bash
 export DB_URL=jdbc:postgresql://your-database-host:5432/airline_db
 ```
 
-5. Run the application.
+5. Run the tests.
+
+```bash
+./mvnw test
+```
+
+6. Run the application.
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-6. The API will be available at:
+The API will be available at:
 
 ```text
 http://localhost:8080
@@ -119,7 +134,7 @@ http://localhost:8080
 
 - Deploy the Spring Boot application to AWS EC2
 - Connect the application to PostgreSQL on Amazon RDS
-- Add automated tests for controller and service layers
+- Expand automated tests for controller and service layers
 - Improve error responses with a consistent JSON format
 - Add API documentation using Swagger / OpenAPI
 - Add database migration management with Flyway
