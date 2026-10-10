@@ -130,6 +130,49 @@ The API will be available at:
 http://localhost:8080
 ```
 
+## Running with Docker
+
+Make sure PostgreSQL is running and the database environment variables are configured as described in the Setup section.
+
+### Build the Application
+
+First, build the JAR file:
+
+```bash
+./mvnw clean package
+```
+
+### Build the Docker Image
+
+```bash
+docker build -t airline-api:v0 .
+```
+
+### Run the Docker Container
+
+Make sure PostgreSQL is running on your local machine.
+
+```bash
+docker run --rm --name airline-api-test \
+  -p 8080:8080 \
+  -e DB_URL=jdbc:postgresql://host.docker.internal:5432/airline_db \
+  -e DB_USERNAME=your_postgresql_username \
+  -e DB_PASSWORD=your_postgresql_password \
+  airline-api:v0
+```
+
+Replace the username and password with your PostgreSQL credentials.
+
+For local PostgreSQL users without a password, use `-e DB_PASSWORD=''`.
+
+`host.docker.internal` allows the Docker container to connect to PostgreSQL running on the host machine when using Docker Desktop.
+
+The API will be available at:
+
+```text
+http://localhost:8080/flights
+```
+
 ## Future Improvements
 
 - Deploy the Spring Boot application to AWS EC2
