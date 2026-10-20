@@ -173,6 +173,62 @@ The API will be available at:
 http://localhost:8080/flights
 ```
 
+## Running with Docker Compose
+
+Prerequisites: Docker Desktop (with Docker Compose), Java 21, and the included Maven Wrapper. A separate PostgreSQL installation is not required.
+
+Docker Compose allows the Spring Boot application and PostgreSQL database to run together in containers.
+
+### 1. Create the environment file
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` and set a secure value for `POSTGRES_PASSWORD`. Do not commit `.env` to Git.
+
+### 2. Build the application
+
+```bash
+./mvnw clean package -DskipTests
+```
+
+### 3. Start the containers
+
+```bash
+docker compose up -d --build
+```
+
+Docker Compose starts PostgreSQL and waits for its health check before starting Spring Boot.
+
+### 4. Check the containers
+
+```bash
+docker compose ps
+```
+
+### 5. Test the API
+
+```bash
+curl -i http://localhost:8080/flights
+```
+
+The expected HTTP status is `200 OK`.
+
+### 6. View logs
+
+```bash
+docker compose logs --tail=50 app
+```
+
+### 7. Stop the containers
+
+```bash
+docker compose down
+```
+
+The PostgreSQL named volume is preserved by default. Avoid using `docker compose down -v` unless you intend to delete the database data.
+
 ## Future Improvements
 
 - Deploy the Spring Boot application to AWS EC2
